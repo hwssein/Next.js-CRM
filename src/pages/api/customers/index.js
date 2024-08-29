@@ -26,6 +26,33 @@ const handler = async (req, res) => {
         .status(500)
         .json({ status: "failed", message: "Can Not Create Data" });
     }
+  } else if (req.method === "GET") {
+    try {
+      const customerData = await Customer.find();
+
+      res.status(200).json({ status: "success", data: customerData });
+    } catch (error) {
+      console.log("Can Not Get Customers\n", error);
+      res
+        .status(500)
+        .json({ status: "failed", message: "Unable To Get Customers Data" });
+    }
+  } else if (req.method === "DELETE") {
+    try {
+      const id = req.body;
+
+      const deleteCustomer = await Customer.findByIdAndDelete({ _id: id });
+      res.status(200).json({
+        status: "success",
+        message: "Customer Removed",
+        data: deleteCustomer,
+      });
+    } catch (error) {
+      console.log("Cant Remove Customer\n", error);
+      res
+        .status(500)
+        .json({ status: "failed", message: "Cant Remove Customer" });
+    }
   }
 };
 
