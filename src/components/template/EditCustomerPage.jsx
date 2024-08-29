@@ -1,23 +1,15 @@
 import { useState } from "react";
-import { useRouter } from "next/router";
 
 import Form from "../modules/Form";
 
 import { Box, Button, Typography } from "@mui/material";
+import { useRouter } from "next/router";
 
-function AddCustomerPage() {
+function EditCustomerPage({ data }) {
   const router = useRouter();
-  const [form, setForm] = useState({
-    name: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    date: null,
-    products: [],
-  });
+  const [form, setForm] = useState({ ...data });
 
-  const saveHandler = async () => {
+  const EditHandler = async () => {
     const phoneRegex = /^09\d{9}$/;
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -27,7 +19,7 @@ function AddCustomerPage() {
     if (!emailRegex.test(form.email)) return alert("Please Enter Valid Email");
 
     const req = await fetch("/api/customers", {
-      method: "POST",
+      method: "PATCH",
       body: JSON.stringify(form),
       headers: { "Content-type": "application/json" },
     });
@@ -35,7 +27,7 @@ function AddCustomerPage() {
     const res = await req.json();
 
     if (res.status === "success") {
-      router.push("/");
+      router.reload();
     } else {
       alert("The New Customer Could Not Be Saved");
     }
@@ -64,7 +56,7 @@ function AddCustomerPage() {
         fontWeight="bold"
         my={2}
       >
-        Add Customer
+        Edit Customer
       </Typography>
 
       <Form form={form} setForm={setForm} />
@@ -95,13 +87,13 @@ function AddCustomerPage() {
           size="small"
           color="success"
           sx={{ width: "100px" }}
-          onClick={saveHandler}
+          onClick={EditHandler}
         >
-          Save
+          Edit
         </Button>
       </Box>
     </>
   );
 }
 
-export default AddCustomerPage;
+export default EditCustomerPage;

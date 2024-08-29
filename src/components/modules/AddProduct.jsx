@@ -109,7 +109,7 @@ function AddProduct({ form, setForm }) {
 
               <Grid2 size={{ xs: 12, sm: 6 }}>
                 <TextField
-                  type="text"
+                  type="number"
                   name="price"
                   label="Price"
                   value={item.price}

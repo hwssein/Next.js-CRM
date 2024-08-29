@@ -53,6 +53,21 @@ const handler = async (req, res) => {
         .status(500)
         .json({ status: "failed", message: "Cant Remove Customer" });
     }
+  } else if (req.method === "PATCH") {
+    const data = req.body;
+    try {
+      const newData = await Customer.findByIdAndUpdate(data._id, data);
+      res.status(200).json({
+        status: "success",
+        message: "Customer Data Changed",
+        data: newData,
+      });
+    } catch (error) {
+      console.log("Can Not Edit Data/n", error);
+      res
+        .status(500)
+        .json({ status: "failed", message: "Can Not Change Data" });
+    }
   }
 };
 

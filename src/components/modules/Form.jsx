@@ -107,7 +107,7 @@ function Form({ form, setForm }) {
               variant="filled"
               color="primary"
               size="small"
-              value={form.date}
+              value={new Date(form.date).toISOString().split("T")[0]}
               onChange={changeHandler}
               sx={{
                 backgroundColor: "var(--secondary)",
