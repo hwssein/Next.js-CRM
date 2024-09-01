@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /add-customer
+Disallow: /customer
+Disallow: /edit
+
+# Explicitly allow the root and all general pages
+Allow: /
+
+# Specify the location of the sitemap
+Sitemap: https://kavir-crm.netlify.app/sitemap.xml
